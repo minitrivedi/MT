@@ -29,4 +29,4 @@ spec:
     - protocol: TCP
       port: 8083   # Expose port 80 from the service
       targetPort: 80
-  type: LoadBalancer  # You can change this to ClusterIP if you don't need external access
+  type: NodePort  # You can change this to ClusterIP if you don't need external access
