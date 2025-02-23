@@ -12,9 +12,9 @@ pipeline {
                 script {
                     // Build the Docker image using the Dockerfile in the current directory
                  //   docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
-                    docker build -t "${DOCKER_IMAGE}:${DOCKER_TAG}" .
-                }
-            }
+                    docker build -t "${DOCKER_IMAGE}:${DOCKER_TAG}" Dockerfile
+                        }
+                 }
         }
         
         stage('Run Docker Container') {
