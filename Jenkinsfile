@@ -20,7 +20,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                  sh 'docker run -d -p 8081:80 my-nginx-image'
+                  sh 'docker run -d -p 8082:80 my-nginx-image'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     // Wait for the Nginx server to be up and running
-                    sh "curl -s http://localhost:8081"
+                    sh "curl -s http://localhost:8082"
                 }
             }
         }
