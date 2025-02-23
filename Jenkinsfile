@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     // Wait for the Nginx server to be up and running
-                    sh "curl -s http://localhost:8080"
+                    sh "curl -s http://localhost:8081"
                 }
             }
         }
