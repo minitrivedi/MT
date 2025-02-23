@@ -63,6 +63,9 @@ pipeline {
                     sh 'kubectl apply -f nginx-deployment.yaml'
                     sh 'kubectl get pods'
                     sh 'kubectl get svc'
+                }
+            }
+        }
        /* stage('Cleanup') {
             steps {
                 script {
