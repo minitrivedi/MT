@@ -60,7 +60,13 @@ pipeline {
             steps{
                 script{
                     sh 'kubectl get nodes'
+                     withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                         sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                   // sh 'kubectl create secret docker-registry my-docker-secret \
+//  --docker-server=https://index.docker.io/v1/ --docker-username=<your-dockerhub-username> --docker-password=<your-dockerhub-password> 
+
                     sh 'kubectl apply -f nginx-deployment.yaml'
+                     }
                     sh 'kubectl get pods'
                     sh 'kubectl get svc'
                 }
