@@ -4,15 +4,14 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'my-nginx-image'
         DOCKER_TAG = 'latest'
+        DOCKER_HUB_REPO = 'mtrivedi2093/testwebsite'
+        DOCKER_CREDENTIALS = 'mtrivedi2093'  // Jenkins credentials ID
     }
     
     stages {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'ls -ltr'
-                    // Build the Docker image using the Dockerfile in the current directory
-                 //   docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                     sh 'docker build -t "${DOCKER_IMAGE}:${DOCKER_TAG}" .'
                         }
                  }
@@ -21,9 +20,6 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    // Run the Nginx container from the built image
-                    // Here, we expose port 8080 and map it to the container's port 80
-                  //  docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").run('-d -p 8080:80')
                   sh 'docker run -d -p 8081:80 my-nginx-image'
                 }
             }
@@ -37,7 +33,29 @@ pipeline {
                 }
             }
         }
-        
+         stage('Login to Docker Hub') {
+            steps {
+                script {
+                    // Login to Docker Hub using Jenkins credentials
+                    withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                    }
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    // Tag the built image with your Docker Hub repository
+                   // docker.tag("${DOCKER_IMAGE}:${DOCKER_TAG}", "${DOCKER_HUB_REPO}:${DOCKER_TAG}")
+
+                    sh "docker tag "${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_HUB_REPO}:${DOCKER_TAG}"
+                    // Push the image to Docker Hub
+                    sh "docker push ${DOCKER_HUB_REPO}:${DOCKER_TAG}"
+                }
+            }
+        }
        /* stage('Cleanup') {
             steps {
                 script {
