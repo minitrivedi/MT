@@ -23,7 +23,7 @@ pipeline {
                     // Run the Nginx container from the built image
                     // Here, we expose port 8080 and map it to the container's port 80
                   //  docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").run('-d -p 8080:80')
-                  docker run -d -p 8080:80 my-nginx-image
+                  docker run -d -p 8080\:80 my-nginx-image
                 }
             }
         }
