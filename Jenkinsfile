@@ -50,7 +50,7 @@ pipeline {
                     // Tag the built image with your Docker Hub repository
                    // docker.tag("${DOCKER_IMAGE}:${DOCKER_TAG}", "${DOCKER_HUB_REPO}:${DOCKER_TAG}")
 
-                    sh "docker tag "${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_HUB_REPO}:${DOCKER_TAG}"
+                    sh "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_HUB_REPO}:${DOCKER_TAG}"
                     // Push the image to Docker Hub
                     sh "docker push ${DOCKER_HUB_REPO}:${DOCKER_TAG}"
                 }
