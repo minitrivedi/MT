@@ -10,9 +10,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    sh 'ls -ltr'
                     // Build the Docker image using the Dockerfile in the current directory
                  //   docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
-                    sh 'docker build -t "${DOCKER_IMAGE}:${DOCKER_TAG}" ../.'
+                    sh 'docker build -t "${DOCKER_IMAGE}:${DOCKER_TAG}" .'
                         }
                  }
         }
